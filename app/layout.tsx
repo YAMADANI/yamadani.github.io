@@ -15,6 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>YAMADANI</title>
+      </head>
       <body className="antialiase overflow: hidden;">
         {children}
       </body>

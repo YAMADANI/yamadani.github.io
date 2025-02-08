@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useState , useEffect } from "react";
 
 export default function Home() {
+  // スクロール
   const [scrollPos, setScrollPos] = useState(0);
 
   const handleScroll = (event: React.WheelEvent | React.TouchEvent) => {
@@ -24,12 +25,36 @@ export default function Home() {
     };  
   }, []);
 
+  // ウィンドウサイズ
+  const [windowSize, setWindowSize] = useState({height: 0});
+
+  useEffect(() => {
+    // ウィンドウサイズを取得する関数
+    const updateSize = () => {
+      setWindowSize({
+        height: window.innerHeight
+      });
+    };
+
+    // 初回のウィンドウサイズ取得
+    updateSize();
+
+    // リサイズ時にサイズを更新
+    window.addEventListener("resize", updateSize);
+    
+    // クリーンアップ関数でイベントリスナーを削除
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  //カラー
   const L = 0.46 + (scrollPos / 100) * (0.704 - 0.46);  // 明度 (L)
   const C = 0.08 + (scrollPos / 100) * (0.14 - 0.08);  // 彩度 (C)
   const h = 194.77 - (scrollPos / 100) * (194.77 - 182.503);  // 色相 (h)
 
-  // 背景色に OKLCH を適用
   const backgroundColor = `oklch(${L} ${C} ${h}deg)`;
+
+  //トランスレート
+  const translate = (windowSize.height / 100) * scrollPos * -1;
 
   return (
       <div
@@ -38,10 +63,10 @@ export default function Home() {
         onTouchMove={handleScroll}
         style={{ backgroundColor: backgroundColor }}>
         <div
-          className="mt-15"
+          className="h-dvh place-content-center"
           style={{
             opacity: 1 - (scrollPos / 100),
-            transform: `translateY(${scrollPos * -5}px)`
+            transform: `translateY(${translate}px)`
           }}>
           <Image
             src="https://avatars.githubusercontent.com/u/193315978?s=400&u=0231ca17fbfb8858722c9b98e810c4730fcc353d&v=4"
@@ -55,10 +80,10 @@ export default function Home() {
           </svg>
         </div>
         <div 
-          className="flex place-content-center"
+          className="flex place-content-center mt-30"
           style={{
             opacity: scrollPos / 100,
-            transform: `translateY(${scrollPos * -5}px)`
+            transform: `translateY(${translate}px)`
           }}
           ><Image
             src="https://avatars.githubusercontent.com/u/193315978?s=400&u=0231ca17fbfb8858722c9b98e810c4730fcc353d&v=4"

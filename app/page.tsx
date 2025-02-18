@@ -93,8 +93,9 @@ export default function Home() {
             className="rounded-full mr-10"/>
           <div>
             <p className="text-center font-rampart text-8xl text-gray-100 my-10">YAMADANI</p>
-            <ul className="text-center mt-10 text-gray-100 text-2xl">
-              <li><a href="https://github.com/YAMADANI/">GitHub</a></li>
+            <ul className="text-center mt-10 text-gray-100 text-2xl flex place-content-center">
+              <li className="m-2"><a href="https://github.com/YAMADANI/">GitHub</a></li>
+              <li className="m-2"><a href="https://twitter.com/YAMADANI42/">Twitter</a></li>
             </ul>
           </div>
         </div>
